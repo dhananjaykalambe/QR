@@ -34,8 +34,17 @@ def mark_attendance():
     session_id = request.args.get('session_id')
     name = request.args.get('name', 'Anonymous')
 
-    if session_id in attendance_data:
-        attendance_data[session_id].append(name)
+    # Check session exists
+    cur.execute("SELECT * FROM sessions WHERE id=%s", (session_id,))
+    session = cur.fetchone()
+
+    if session:
+        cur.execute(
+            "INSERT INTO attendance (session_id, name) VALUES (%s, %s)",
+            (session_id, name)
+        )
+        conn.commit()
+
         return f"Attendance marked for {name}"
 
     return "Invalid Session"
