@@ -20,11 +20,10 @@ def create_session():
     if request.method == 'POST':
         session_id = str(uuid.uuid4())[:8]
 
-        # Generate QR
         qr_path = generate_qr(session_id, request.host_url)
 
-        # Store session
-        attendance_data[session_id] = []
+        cur.execute("INSERT INTO sessions (id) VALUES (%s)", (session_id,))
+        conn.commit()
 
         return render_template('create_session.html', session_id=session_id, qr_path=qr_path)
 
