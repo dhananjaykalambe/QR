@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Session</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>Create Attendance Session</h1>
+
+<form method="POST">
+    <button type="submit">Generate QR Code</button>
+</form>
+
+{% if session_id %}
+    <h2>Session ID: {{ session_id }}</h2>
+
+    <img src="/{{ qr_path }}" width="250">
+
+    <p>Scan this QR to mark attendance</p>
+{% endif %}
+
+</body>
+</html>
