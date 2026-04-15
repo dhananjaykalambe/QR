@@ -1,11 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import uuid
+import psycopg2
 from utils.qr import generate_qr
 
 app = Flask(__name__)
 
-# In-memory storage (for demo)
+DATABASE_URL = os.getenv("DATABASE_URL")
+conn = psycopg2.connect(DATABASE_URL)
+cur = conn.cursor()
+
 attendance_data = {}
 
 @app.route('/')
