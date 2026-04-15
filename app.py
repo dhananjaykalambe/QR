@@ -10,7 +10,6 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
-attendance_data = {}
 
 @app.route('/')
 def index():
