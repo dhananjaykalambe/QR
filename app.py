@@ -51,8 +51,12 @@ def mark_attendance():
 
 @app.route('/view/<session_id>')
 def view_attendance(session_id):
-    data = attendance_data.get(session_id, [])
-    return f"Attendance List: {data}"
+    cur.execute("SELECT name FROM attendance WHERE session_id=%s", (session_id,))
+    data = cur.fetchall()
+
+    names = [row[0] for row in data]
+
+    return f"Attendance List: {names}"
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
